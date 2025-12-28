@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rivelino Rodrigues | Designer Pro</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #000000;
+            --blue: #00C2FF;
+            --blue-hover: #73e5ff;
+            --white: #FFFFFF;
+            --grey: rgba(135, 135, 135, 0.2);
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --overlay-color: #0370ff;
+        }
+
+        /* Scrollbar customizada */
+        body::-webkit-scrollbar { width: 6px; }
+        body::-webkit-scrollbar-track { background: var(--grey); }
+        body::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 6px; }
+
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+        a, button, .hamburger, .nav-item, .btn-contact { cursor: pointer !important; }
+
+        #custom-cursor {
+            position: fixed; width: 40px; height: 40px; border: 2px solid var(--white);
+            border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%);
+            mix-blend-mode: difference; transition: transform 0.2s ease-out;
+        }
+
+        body { background: var(--bg); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }
+
+        /* --- PRELOADER MANTIDO --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 10001; display: flex;
+            justify-content: center; align-items: center;    
+        }
+        .loader-content{ display: flex; flex-direction:column; align-items: center;}
+        .loader-bar-bg { width: 250px; height: 2px; background: rgba(255, 255, 255, 0.1); margin: 20px 0; border-radius: 5px; overflow: hidden; }
+        .loader-bar-fill { height: 100%; width: 0%; background: var(--blue); }
+
+        #plexus-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; }
+
+        /* --- NAVBAR --- */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 110px; padding: 0 50px;
+            display: flex; align-items: center; justify-content: space-between; 
+            z-index: 5000;
+            background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 100%);
+            transition: background 0.4s ease;
+        }
+        
+        nav.nav-active-mobile { background: var(--overlay-color); }
+        .logo { height: 30px; z-index: 5001; transition: 0.3s; display: flex; align-items: center; }
+        .logo img { height: 100%; width: auto; }
+        .logo.hide-logo { opacity: 0; visibility: hidden; }
+
+        .nav-center { display: flex; align-items: center; gap: 30px; position: relative; margin-left: 20px; }
+        .nav-center .magnetic-link { text-decoration: none; color: var(--white); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+        #nav-underline { position: absolute; bottom: -5px; height: 2px; background: var(--blue); width: 0; opacity: 0; transition: 0.3s; }
+
+        .nav-social-inner { display: flex; align-items: center; gap: 18px; margin: 0 30px; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 30px; }
+        .nav-social-inner a { color: rgba(255,255,255,0.4); font-size: 16px; transition: 0.3s; }
+        .nav-social-inner a:hover { color: var(--blue); }
+
+        .nav-right { display: flex; align-items: center; gap: 25px; flex-shrink: 0; }
+        .nav-right .magnetic-link { text-decoration: none; color: white; font-size: 13px; text-transform: uppercase; font-weight: 500; }
+
+        .steve-jobs-quote { position: fixed; top: 40%; right: 50px; text-align: right; font-size: 8px; opacity: 0.6; z-index: 90; pointer-events: none; line-height: 1.8; white-space: pre-line; text-transform: uppercase; }
+
+        /* BOTAO CONTATO */
+        .btn-contact { position: relative; padding: 12px 56px; border: 1.5px solid var(--blue); border-radius: 12px; color: var(--white); text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; overflow: hidden; background: transparent; display: flex; align-items: center; }
+        .btn-spotlight { position: absolute; width: 80px; height: 80px; background: var(--blue); border-radius: 50%; opacity: 0; filter: blur(25px); pointer-events: none; transform: translate(-50%, -50%); z-index: -1; }
+        .btn-contact:hover { color: #000; }
+        .btn-contact:hover .btn-spotlight { opacity: 1; width: 300%; height: 300%; transition: 0.6s; }
+
+        /* HAMBURGER */
+        .hamburger { display: none; background: none; border: none; padding: 10px; width: 50px; z-index: 6000; position: relative; height: 45px;}
+        .ham-line { display: block; height: 2px; background: white; margin-bottom: 7px; transition: 0.4s; transform-origin: center;}
+        .ham-active .ham-line-1 { transform: translateY(9px) rotate(45deg); }
+        .ham-active .ham-line-2 { opacity: 0; }
+        .ham-active .ham-line-3 { transform: translateY(-9px) rotate(-45deg); width: 35px; }
+
+        /* --- MOBILE OVERLAY (ENTRADA DO TOPO) --- */
+        .mobile-overlay { 
+            position: fixed; top: -100%; left: 0; width: 100%; height: 100%; 
+            background: var(--overlay-color); z-index: 4500; display: flex; 
+            flex-direction: column; justify-content: center; align-items: center; gap: 15px;
+            /* ⏱️ Altere '0.7s' abaixo para o tempo da animação do menu abrir/fechar */
+            transition: top -1s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        .mobile-overlay a { font-family: var(--font-heading); font-size: 24px; color: white; text-decoration: none; font-weight: 900; text-transform: uppercase; position: relative; }
+        .mobile-overlay a::before {
+            content: attr(data-text); position: absolute; left: 50%; top: 50%;
+            transform: translate(-50%, -50%); font-size: 30px; color: var(--blue);
+            opacity: 0; font-weight: 900; z-index: -1; transition: 0.5s ease; white-space: nowrap; pointer-events: none;
+        }
+        .mobile-overlay a:hover::before { opacity: 0.5; transform: translate(-50%, -50%) scale(1.5); }
+
+        /* --- HERO MANTIDO --- */
+        .hero { position: relative; height: 100vh; display: flex; align-items: center; padding-left: 10%; width: 100%; z-index: 10; }
+        .hero-content { line-height: 0.8; z-index: 30; position: relative; }
+        .firstname { color: var(--blue);}
+        .hero-image-wrapper { position: absolute; top: 0; right: 0; width: 45%; height: 100%; z-index: 5; }
+        .hero-image-wrapper img { height: 100%; width: 100%; object-fit: cover; opacity: 1; transition: 0.5s; }
+
+        .social-sidebar { display: none; z-index: 100; }
+
+        /* SCROLL DOWN INDICATOR */
+        .scroll-down {
+            position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
+            text-align: center; font-size: 9px; letter-spacing: 4px; z-index: 30;
+            display: flex; flex-direction: column; align-items: center; opacity: 0.6; text-decoration: none; color: white;
+        }
+        .scroll-down i { display: block; font-size: 16px; margin-top: 15px; color: var(--blue); animation: infinite-drop 2s infinite ease-in-out; }
+
+        /* --- SESSÃO PROJETOS --- */
+        .projects-section {
+            background-color: var(--bg); position: relative; z-index: 100;
+            padding: 160px 8%; display: flex; flex-wrap: wrap; gap: 50px;
+        }
+        .projects-header { width: 35%; order: 1; text-align: left; position: sticky; top: 150px; height: fit-content; }
+        .projects-header h2 { font-family: var(--font-heading); font-size: clamp(3rem, 10vw, 4.5rem); font-weight: 800; line-height: 0.85; text-transform: uppercase; margin-bottom: 30px; }
+        .projects-header h2 .white { color: var(--white); }
+        .projects-header h2 .blue { color: var(--blue); }
+        .projects-header p { font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 40px; }
+
+        .btn-view-all { display: inline-block; padding: 15px 40px; border: 1px solid var(--blue); color: var(--blue); text-decoration: none; border-radius: 12px; font-weight: 900; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .btn-view-all:hover { background: var(--blue); color: #000; }
+
+        .projects-grid { width: 60%; order: 2; display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .project-card { position: relative; border-radius: 20px; overflow: hidden; height: 420px; background: #111; }
+        .project-img { width: 100%; height: 100%; object-fit: cover; transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .project-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 194, 255, 0.95); padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transition: 0.4s; transform: translateY(10px); }
+        .project-card:hover .project-overlay { opacity: 1; transform: translateY(0); }
+        .project-card:hover .project-img { transform: scale(1.12); }
+        .project-overlay h3 { font-family: var(--font-heading); font-size: 1.8rem; color: #000; margin-bottom: 10px; text-transform: uppercase; }
+        .project-overlay p { color: #000; font-size: 0.9rem; line-height: 1.4; margin-bottom: 25px; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .btn-project-cta { padding: 10px 25px; border: 2.3px solid #000; color: #000; text-transform: uppercase; text-decoration: none; font-size: 11px; font-weight: 900; border-radius: 50px; }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 1100px) {
+            nav { padding: 0 25px; height: 80px; }
+            .logo-desktop { display: none; }
+            .logo-desktop { display: block !important; width: 3.5rem !important; height: auto !important; }
+            .nav-center, .nav-social-inner, .nav-right, .steve-jobs-quote { display: none !important; }
+            .hamburger { display: block; }
+            .hero { padding-left: 0; justify-content: center; text-align: center; }
+            
+            /* Correção Typewriter p/ Mobile: Fonte reduzida */
+            .hero-content div { font-size: 1.3rem !important; margin-top: 15px !important; white-space: nowrap; }
+            .hero-image-wrapper { opacity: 0.3; }
+
+            .projects-section { display: block; padding: 0; }
+            .projects-header { width: 100%; text-align: center; margin-bottom: 30px; position: relative; top: 0; padding: 100px 6% 20px;}
+            .projects-grid { width: 100%; grid-template-columns: 1fr; gap: 0; }
+            
+            /* Estilo p/ efeito de Stacking Layers */
+            .project-card { 
+                height: 100vh; width: 100vw; border-radius: 0; 
+                border-top: 1px solid rgba(255,255,255,0.1); 
+            }
+
+            /* Social Media Mobile: Acompanha Hero, Branco */
+            .social-sidebar { 
+                display: flex; position: absolute; flex-direction: row; 
+                bottom: 30px; left: 50%; transform: translateX(-50%); gap: 35px;
+            }
+            .social-sidebar a { color: rgba(255,255,255,0.8); font-size: 18px; }
+            .scroll-down { bottom: 100px; } /* Ajustado p/ ficar acima da social sidebar */
+        }
+    </style>
+</head>
+<body data-lenis-prevent-touch>
+
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="Logo-RivaUX-Branco-Azul.png" alt="RivaUX" style="height: 50px; margin-bottom: 20px;">
+            <div class="loader-bar-bg"><div class="loader-bar-fill"></div></div>
+            <div style="font-size: 10px; letter-spacing: 4px; opacity: 0.6;">BEM-VINDO</div>
+        </div>
+    </div>
+
+    <div id="custom-cursor"></div>
+    <div class="steve-jobs-quote">"Design não é apenas aparência.<br>Design é como funciona."<br><strong>- STEVE JOBS</strong></div>
+    <canvas id="plexus-canvas"></canvas>
+
+    <nav id="main-nav">
+        <div class="logo">
+            <img src="Logo-RivaUX-Branco-Azul.png" class="logo-desktop" alt="Logo">
+            <!--img src="Logo-RivaUX-Branco-Azul.png" class="logo-mobile" alt="Logo"-->
+        </div>
+        
+        <div class="nav-center">
+            <a href="#home" class="magnetic-link">Home</a>
+            <a href="#sobre" class="magnetic-link">Sobre</a>
+            <a href="#skills" class="magnetic-link">Skills</a>
+            <a href="#projetos" class="magnetic-link">Projetos</a>
+            <a href="#servicos" class="magnetic-link">Serviços</a>
+            <a href="#curriculo" class="magnetic-link">Currículo</a>
+            <a href="#blog" class="magnetic-link">Blog</a>
+            <div id="nav-underline"></div>
+        </div>
+
+        <div class="nav-social-inner">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-behance"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+
+        <div class="nav-right">
+            <a href="#" class="magnetic-link">Aulas</a>
+            <a href="#contato" class="btn-contact">CONTATO<div class="btn-spotlight"></div></a>
+        </div>
+
+        <button class="hamburger" id="hamburger">
+            <span class="ham-line ham-line-1"></span>
+            <span class="ham-line ham-line-2" style="width: 22px; margin-left: auto;"></span>
+            <span class="ham-line ham-line-3" style="width: 28px; margin-left: auto;"></span>
+        </button>
+    </nav>
+
+    <div class="mobile-overlay" id="mobile-overlay">
+        <a href="#home" data-text="HOME">Home</a>
+        <a href="#sobre" data-text="SOBRE">Sobre</a>
+        <a href="#skills" data-text="SKILLS">Skills</a>
+        <a href="#projetos" data-text="PROJETOS">Projetos</a>
+        <a href="#servicos" data-text="SERVICOS">Serviços</a>
+        <a href="#curriculo" data-text="CURRICULO">Currículo</a>
+        <a href="#blog" data-text="BLOG">Blog</a>
+        <a href="#" data-text="AULAS">Aulas</a>
+        <a href="#contato" data-text="CONTATO">Contato</a>
+    </div>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1 style="font-family: 'Outfit'; font-weight: 800; font-size: clamp(2rem, 10vw, 4rem);">
+                    <span class="firstname">RIVELINO</span><br>RODRIGUES
+                </h1>
+                <div style="margin-top:20px; font-size: 2rem; font-weight: 300;">EU SOU <span id="type-target" style="font-weight: 800; color: var(--blue);"></span><span style="color:var(--blue)">|</span></div>
+            </div>
+            <div class="hero-image-wrapper"><img src="hero-section-img.png" alt="Hero Image"></div>
+            
+            <a href="#projetos" class="scroll-down">SCROLL DOWN<i class="fas fa-chevron-down"></i></a>
+
+            <div class="social-sidebar">
+                <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.behance.net" target="_blank"><i class="fab fa-behance"></i></a>
+                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </section>
+
+        <section class="projects-section" id="projetos">
+            <div class="projects-header scroll-reveal">
+                <h2><span class="white">MEUS</span><br><span class="blue">PROJETOS</span></h2>
+                <p>O design disruptivo une a estética à utilidade. Explore abaixo meus casos de estudo que unificam performance, psicologia de produto e visual impactante.</p>
+                <a href="#" class="btn-view-all">Ver todos os projetos</a>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card stack-mobile">
+                    <img src="case-img.jpg" class="project-img">
+                    <div class="project-overlay"><h3>FINTECH UX</h3><p>Design moderno para transações bancárias complexas.</p><a href="#" class="btn-project-cta">Ver projeto</a></div>
+                </div>
+                <div class="project-card stack-mobile">
+                    <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1200" class="project-img">
+                    <div class="project-overlay"><h3>DASHBOARD AI</h3><p>Painel de controle com visualização de dados estratégicos.</p><a href="#" class="btn-project-cta">Ver projeto</a></div>
+                </div>
+                <div class="project-card stack-mobile">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200" class="project-img">
+                    <div class="project-overlay"><h3>E-COMMERCE LUX</h3><p>Experiência premium para lojas de alto luxo.</p><a href="#" class="btn-project-cta">Ver projeto</a></div>
+                </div>
+                <div class="project-card stack-mobile">
+                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1200" class="project-img">
+                    <div class="project-overlay"><h3>MOBILE CONNECT</h3><p>Foco na interatividade e formação de micro-comunidades.</p><a href="#" class="btn-project-cta">Ver projeto</a></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(TextPlugin, ScrollTrigger);
+
+        // --- 1. SMOOTH SCROLL (LENIS) ---
+        // ⏱️ Para alterar a suavidade geral da página, mexa no 'duration' abaixo:
+        const lenis = new Lenis({ duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        lenis.on('scroll', ScrollTrigger.update);
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // --- 2. PRELOADER & START ---
+        // ⏱️ Altere 'duration' (1.5) p/ mudar quão rápido a barra do preloader sobe
+        gsap.to(".loader-bar-fill", { width: "100%", duration: 1.5, onComplete: () => {
+            gsap.to("#preloader", { y: "-100%", duration: 1, ease: "power4.inOut" });
+            initPlexus(); initScrollAnimations();
+        }});
+
+        // --- 3. CURSOR & MENU ---
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', e => gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 }));
+
+        const ham = document.getElementById('hamburger');
+        const overlay = document.getElementById('mobile-overlay');
+        const logoCont = document.querySelector('.logo');
+        const mainNav = document.getElementById('main-nav');
+
+        ham.addEventListener('click', () => {
+            const isOpening = !ham.classList.contains('ham-active');
+            ham.classList.toggle('ham-active');
+            // Animação descendo do topo
+            gsap.to(overlay, { top: isOpening ? 0 : "-100%", duration: 0.8, ease: "power3.inOut" });
+            mainNav.classList.toggle('nav-active-mobile', isOpening);
+            logoCont.classList.toggle('hide-logo', isOpening);
+        });
+
+        // Spotlight
+        const btnContact = document.querySelector('.btn-contact');
+        btnContact.addEventListener('mousemove', e => {
+            const rect = btnContact.getBoundingClientRect();
+            gsap.to('.btn-spotlight', { left: e.clientX - rect.left, top: e.clientY - rect.top, duration: 0.3 });
+        });
+
+        // Typewriter
+        const words = ["UX UI DESIGNER", "WEB DESIGNER", "FREELANCER"];
+        let masterTl = gsap.timeline({repeat: -1});
+        words.forEach(word => {
+            masterTl.add(gsap.timeline({repeatDelay: 2}).to("#type-target", { text: word, duration: 1.2 }).to("#type-target", { text: "", duration: 0.8, delay: 1.5 }));
+        });
+
+        // --- 4. SCROLL ANIMATIONS (STACKING LAYERS MOBILE) ---
+        function initScrollAnimations() {
+            // Cards fade-in padrão p/ Desktop
+            gsap.utils.toArray('.scroll-reveal').forEach((item) => {
+                // ⏱️ Altere 'duration' (1.2) p/ mudar a velocidade de surgimento das seções ao scrollar
+                gsap.fromTo(item, { opacity: 0, y: 50 }, { 
+                    opacity: 1, y: 0, duration: 1.2, ease: "power3.out",
+                    scrollTrigger: { trigger: item, start: "top 90%", end: "bottom 10%", toggleActions: "play reverse play reverse" }
+                });
+            });
+
+            // STACKING EFFECT (Apenas no Mobile < 1100px)
+            ScrollTrigger.matchMedia({
+                "(max-width: 1100px)": function() {
+                    gsap.utils.toArray(".stack-mobile").forEach((panel, i) => {
+                        ScrollTrigger.create({
+                            trigger: panel,
+                            start: "top top",
+                            pin: true,
+                            pinSpacing: false, // Efeito solicitado: encavalar/stacking
+                            scrub: true
+                        });
+                    });
+                }
+            });
+        }
+
+        // --- 5. PLEXUS MANTIDO ---
+        function initPlexus() {
+            const canvas = document.getElementById('plexus-canvas');
+            const ctx = canvas.getContext('2d');
+            let p = [], m = { x: -1000, y: -1000, r: 220 };
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            for(let i=0; i< (canvas.width * canvas.height / 35000); i++) {
+                p.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*1.6, vy: (Math.random()-0.5)*1.6, s: 2.8 });
+            }
+            function anim() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                p.forEach(pt => {
+                    pt.x += pt.vx; pt.y += pt.vy;
+                    if(pt.x<0 || pt.x>canvas.width) pt.vx *= -1;
+                    if(pt.y<0 || pt.y>canvas.height) pt.vy *= -1;
+                    let dx = pt.x - m.x, dy = pt.y - m.y, d = Math.sqrt(dx*dx + dy*dy);
+                    if(d < m.r) { pt.x += (dx/d)*10; pt.y += (dy/d)*10; }
+                    ctx.fillStyle = "rgba(255,255,255,0.4)";
+                    ctx.beginPath(); ctx.arc(pt.x, pt.y, pt.s, 0, Math.PI * 2); ctx.fill();
+                    p.forEach(pt2 => {
+                        let d2 = Math.sqrt((pt.x-pt2.x)**2 + (pt.y-pt2.y)**2);
+                        if(d2 < 180){
+                            ctx.strokeStyle = `rgba(0,194,255,${(1-d2/180)*0.35})`;
+                            ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(pt.x, pt.y); ctx.lineTo(pt2.x, pt2.y); ctx.stroke();
+                        }
+                    });
+                });
+                requestAnimationFrame(anim);
+            }
+            window.addEventListener('mousemove', e => { m.x=e.clientX; m.y=e.clientY; });
+            anim();
+        }
+        
+        // Underline Magnético Navbar
+        const underline = document.getElementById('nav-underline');
+        document.querySelectorAll('.nav-center .magnetic-link').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                const rect = link.getBoundingClientRect(), parent = link.parentElement.getBoundingClientRect();
+                gsap.to(underline, { left: rect.left - parent.left, width: rect.width, opacity: 1, duration: 0.3 });
+            });
+        });
+        document.querySelector('.nav-center').addEventListener('mouseleave', () => gsap.to(underline, { opacity: 0 }));
+    </script>
+</body>
+</html>
