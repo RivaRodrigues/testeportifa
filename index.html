@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rivelino Rodrigues | Designer Pro</title>
-    
+   
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
+   
     <style>
         :root {
             --bg: #000000;
@@ -21,7 +21,7 @@
             --overlay-color: #0370ff;
         }
 
-        /* Scrollbar customizada */
+        /* Barra de rolagem nativa do site */
         body::-webkit-scrollbar { width: 6px; }
         body::-webkit-scrollbar-track { background: var(--grey); }
         body::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 6px; }
@@ -40,7 +40,7 @@
 
         body { background: var(--bg); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }
 
-        /* --- PRELOADER MANTIDO --- */
+        /* --- PRELOADER --- */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg); z-index: 10001; display: flex;
@@ -55,23 +55,23 @@
         /* --- NAVBAR --- */
         nav {
             position: fixed; top: 0; width: 100%; height: 110px; padding: 0 50px;
-            display: flex; align-items: center; justify-content: space-between; 
+            display: flex; align-items: center; justify-content: space-between;
             z-index: 5000;
             background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 100%);
             transition: background 0.4s ease;
         }
-        
         nav.nav-active-mobile { background: var(--overlay-color); }
-        .logo { height: 30px; z-index: 5001; transition: 0.3s; display: flex; align-items: center; }
-        .logo img { height: 100%; width: auto; }
+        .logo { height: 30px; z-index: 5001; flex-shrink: 0; display: flex; align-items: center; transition: 0.3s; }
+        .logo img { height: 100%; width: auto; object-fit: contain; }
+        .logo-mobile { display: none; }
         .logo.hide-logo { opacity: 0; visibility: hidden; }
 
         .nav-center { display: flex; align-items: center; gap: 30px; position: relative; margin-left: 20px; }
-        .nav-center .magnetic-link { text-decoration: none; color: var(--white); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+        .magnetic-link { text-decoration: none; color: var(--white); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
         #nav-underline { position: absolute; bottom: -5px; height: 2px; background: var(--blue); width: 0; opacity: 0; transition: 0.3s; }
 
         .nav-social-inner { display: flex; align-items: center; gap: 18px; margin: 0 30px; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 30px; }
-        .nav-social-inner a { color: rgba(255,255,255,0.4); font-size: 16px; transition: 0.3s; }
+        .nav-social-inner a { color: rgba(255,255,255,0.4); font-size: 16px; transition: 0.3s; text-decoration: none; }
         .nav-social-inner a:hover { color: var(--blue); }
 
         .nav-right { display: flex; align-items: center; gap: 25px; flex-shrink: 0; }
@@ -79,106 +79,290 @@
 
         .steve-jobs-quote { position: fixed; top: 40%; right: 50px; text-align: right; font-size: 8px; opacity: 0.6; z-index: 90; pointer-events: none; line-height: 1.8; white-space: pre-line; text-transform: uppercase; }
 
-        /* BOTAO CONTATO */
-        .btn-contact { position: relative; padding: 12px 56px; border: 1.5px solid var(--blue); border-radius: 12px; color: var(--white); text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; overflow: hidden; background: transparent; display: flex; align-items: center; }
+        .btn-contact { position: relative; padding: 12px 56px; border: 1.5px solid var(--blue); border-radius: 50px; color: var(--white); text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; overflow: hidden; background: transparent; display: flex; align-items: center; }
         .btn-spotlight { position: absolute; width: 80px; height: 80px; background: var(--blue); border-radius: 50%; opacity: 0; filter: blur(25px); pointer-events: none; transform: translate(-50%, -50%); z-index: -1; }
         .btn-contact:hover { color: #000; }
         .btn-contact:hover .btn-spotlight { opacity: 1; width: 300%; height: 300%; transition: 0.6s; }
 
         /* HAMBURGER */
         .hamburger { display: none; background: none; border: none; padding: 10px; width: 50px; z-index: 6000; position: relative; height: 45px;}
-        .ham-line { display: block; height: 2px; background: white; margin-bottom: 7px; transition: 0.4s; transform-origin: center;}
+        .ham-line { display: block; height: 2px; background: white; margin-bottom: 7px; transition: all 0.4s; transform-origin: center;}
+        .ham-line-1 { width: 35px; } .ham-line-2 { width: 22px; margin-left: auto; } .ham-line-3 { width: 28px; margin-bottom: 0; margin-left: auto;}
         .ham-active .ham-line-1 { transform: translateY(9px) rotate(45deg); }
         .ham-active .ham-line-2 { opacity: 0; }
         .ham-active .ham-line-3 { transform: translateY(-9px) rotate(-45deg); width: 35px; }
 
-        /* --- MOBILE OVERLAY (ENTRADA DO TOPO) --- */
-        .mobile-overlay { 
-            position: fixed; top: -100%; left: 0; width: 100%; height: 100%; 
-            background: var(--overlay-color); z-index: 4500; display: flex; 
-            flex-direction: column; justify-content: center; align-items: center; gap: 15px;
-            /* ⏱️ Altere '0.7s' abaixo para o tempo da animação do menu abrir/fechar */
-            transition: top -1s cubic-bezier(0.7, 0, 0.3, 1);
-        }
-        .mobile-overlay a { font-family: var(--font-heading); font-size: 24px; color: white; text-decoration: none; font-weight: 900; text-transform: uppercase; position: relative; }
-        .mobile-overlay a::before {
-            content: attr(data-text); position: absolute; left: 50%; top: 50%;
-            transform: translate(-50%, -50%); font-size: 30px; color: var(--blue);
-            opacity: 0; font-weight: 900; z-index: -1; transition: 0.5s ease; white-space: nowrap; pointer-events: none;
-        }
+        /* MOBILE OVERLAY */
+        .mobile-overlay { position: fixed; top: -100%; left: 0; width: 100%; height: 100%; background: var(--overlay-color); z-index: 4500; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px; transition: top 0.7s cubic-bezier(0.7, 0, 0.3, 1); }
+        .mobile-overlay a { font-family: var(--font-heading); font-size: 24px; color: white; text-decoration: none; font-weight: 900; text-transform: uppercase; position: relative; transition: 0.3s; }
+        .mobile-overlay a::before { content: attr(data-text); position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 30px; color: var(--blue); opacity: 0; font-weight: 900; z-index: -1; transition: 0.5s ease; white-space: nowrap; pointer-events: none; }
         .mobile-overlay a:hover::before { opacity: 0.5; transform: translate(-50%, -50%) scale(1.5); }
 
-        /* --- HERO MANTIDO --- */
+        /* --- HERO --- */
         .hero { position: relative; height: 100vh; display: flex; align-items: center; padding-left: 10%; width: 100%; z-index: 10; }
         .hero-content { line-height: 0.8; z-index: 30; position: relative; }
         .firstname { color: var(--blue);}
         .hero-image-wrapper { position: absolute; top: 0; right: 0; width: 45%; height: 100%; z-index: 5; }
         .hero-image-wrapper img { height: 100%; width: 100%; object-fit: cover; opacity: 1; transition: 0.5s; }
 
-        .social-sidebar { display: none; z-index: 100; }
-
         /* SCROLL DOWN INDICATOR */
-        .scroll-down {
-            position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
-            text-align: center; font-size: 9px; letter-spacing: 4px; z-index: 30;
-            display: flex; flex-direction: column; align-items: center; opacity: 0.6; text-decoration: none; color: white;
-        }
+        .scroll-down { position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); text-align: center; font-size: 9px; letter-spacing: 4px; z-index: 30; opacity: 0.6; text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center;}
         .scroll-down i { display: block; font-size: 16px; margin-top: 15px; color: var(--blue); animation: infinite-drop 2s infinite ease-in-out; }
+        @keyframes infinite-drop { 0% { transform: translateY(-5px); opacity: 0; } 50% { transform: translateY(5px); opacity: 1; } 100% { transform: translateY(15px); opacity: 0; } }
 
-        /* --- SESSÃO PROJETOS --- */
-        .projects-section {
-            background-color: var(--bg); position: relative; z-index: 100;
-            padding: 160px 8%; display: flex; flex-wrap: wrap; gap: 50px;
-        }
+        /* --- SEÇÃO PROJETOS --- */
+        .projects-section { background-color: var(--bg); position: relative; z-index: 100; padding: 160px 8%; display: flex; flex-wrap: wrap; gap: 50px; }
         .projects-header { width: 35%; order: 1; text-align: left; position: sticky; top: 150px; height: fit-content; }
         .projects-header h2 { font-family: var(--font-heading); font-size: clamp(3rem, 10vw, 4.5rem); font-weight: 800; line-height: 0.85; text-transform: uppercase; margin-bottom: 30px; }
         .projects-header h2 .white { color: var(--white); }
         .projects-header h2 .blue { color: var(--blue); }
         .projects-header p { font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 40px; }
-
-        .btn-view-all { display: inline-block; padding: 15px 40px; border: 1px solid var(--blue); color: var(--blue); text-decoration: none; border-radius: 12px; font-weight: 900; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-        .btn-view-all:hover { background: var(--blue); color: #000; }
-
         .projects-grid { width: 60%; order: 2; display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
         .project-card { position: relative; border-radius: 20px; overflow: hidden; height: 420px; background: #111; }
         .project-img { width: 100%; height: 100%; object-fit: cover; transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .project-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 194, 255, 0.95); padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transition: 0.4s; transform: translateY(10px); }
         .project-card:hover .project-overlay { opacity: 1; transform: translateY(0); }
         .project-card:hover .project-img { transform: scale(1.12); }
-        .project-overlay h3 { font-family: var(--font-heading); font-size: 1.8rem; color: #000; margin-bottom: 10px; text-transform: uppercase; }
-        .project-overlay p { color: #000; font-size: 0.9rem; line-height: 1.4; margin-bottom: 25px; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .btn-view-all { display: inline-block; padding: 15px 40px; border: 1px solid var(--blue); color: var(--blue); text-decoration: none; border-radius: 12px; font-weight: 900; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .btn-view-all:hover { background: var(--blue); color: #000; }
         .btn-project-cta { padding: 10px 25px; border: 2.3px solid #000; color: #000; text-transform: uppercase; text-decoration: none; font-size: 11px; font-weight: 900; border-radius: 50px; }
 
-        /* --- RESPONSIVIDADE --- */
+        /* -------------------------------------------
+           SEÇÃO SOBRE E SKILLS
+        ------------------------------------------- */
+        .about-section { background-color: var(--bg); position: relative; z-index: 100; padding: 120px 8%; }
+       
+        .about-header { margin-bottom: 60px; text-align: left; }
+        .about-subtitle { color: var(--blue); font-size: 1rem; letter-spacing: 3px; font-weight: 400; text-transform: uppercase; display: block; margin-bottom: 15px; }
+        .about-header h2 { font-family: var(--font-heading); font-size: clamp(3rem, 10vw, 4.5rem); font-weight: 800; line-height: 0.85; text-transform: uppercase; margin-bottom: 30px; }
+        .about-header h2 .white { color: var(--white); }
+        .about-header h2 .blue { color: var(--blue); }
+
+        .about-content-layout { display: flex; align-items: flex-start; gap: 80px; margin-bottom: 100px; }
+        .about-image-side { width: 40%; }
+        .about-img-box { width: 100%; height: 500px; border-radius: 30px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .about-img-box img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: 0.5s ease; }
+        .about-img-box:hover img { filter: grayscale(0); }
+       
+        .about-text-side { width: 60%; }
+        .about-text-side p { font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); line-height: 1.8; margin-bottom: 25px; }
+
+        /* Grid de Skills */
+        .skills-section-wrapper { width: 100%; margin-top: 50px; }
+        .skills-category { margin-bottom: 60px; }
+        .skills-category h3 { font-family: var(--font-heading); font-size: 2rem; text-transform: uppercase; color: var(--white); margin-bottom: 30px; border-left: 4px solid var(--blue); padding-left: 15px; }
+       
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            width: 100%;
+        }
+       
+        .skill-card {
+            background: #0a0a0a; border: 1px solid rgba(255,255,255,0.05); border-radius: 16px;
+            padding: 30px 20px; text-align: center; transition: all 0.3s ease;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+        }
+        .skill-card:hover { border-color: var(--blue); transform: translateY(-5px); background: #111; box-shadow: 0 10px 30px rgba(0, 194, 255, 0.05); }
+       
+        .skill-icon { font-size: 3.5rem; color: var(--white); margin-bottom: 20px; transition: 0.3s; }
+        .skill-card:hover .skill-icon { color: var(--blue); }
+       
+        .ps-icon {
+            font-family: Arial, sans-serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid currentColor;
+            border-radius: 8px;
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 20px;
+            letter-spacing: -1px;
+            padding-right: 2px;
+        }
+
+        .custom-skill-icon {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border-radius: 8px;
+        }
+        .skill-card:hover .custom-skill-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px rgba(0, 194, 255, 0.6));
+        }
+
+        .skill-title { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .skill-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+        /* -------------------------------------------
+           SEÇÃO CURRÍCULO
+        ------------------------------------------- */
+        .curriculo-section { background-color: var(--bg); position: relative; z-index: 100; padding: 100px 8%; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+        .curriculo-header { margin-bottom: 40px; }
+        .curriculo-header h2 { font-family: var(--font-heading); font-size: clamp(3rem, 10vw, 4.5rem); font-weight: 800; line-height: 0.85; text-transform: uppercase; margin-bottom: 25px; }
+        .curriculo-header h2 .white { color: var(--white); }
+        .curriculo-header h2 .blue { color: var(--blue); }
+        .curriculo-header p { font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.6; max-width: 650px; margin: 0 auto; }
+        
+        .pdf-viewer-wrapper {
+            width: 100%;
+            max-width: 850px;
+            aspect-ratio: 1 / 1.414; 
+            height: auto;
+            margin: 40px auto;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: #111;
+        }
+        
+        .curriculo-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .btn-secondary {
+            border-color: rgba(255,255,255,0.4);
+            color: var(--white);
+        }
+        .btn-secondary:hover {
+            background: var(--white);
+            color: #000;
+            border-color: var(--white);
+        }
+
+        /* -------------------------------------------
+           SEÇÃO SERVIÇOS
+        ------------------------------------------- */
+        .services-section { background-color: var(--bg); position: relative; z-index: 100; padding: 100px 8%; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+        .services-header { margin-bottom: 70px; }
+        .services-header h2 { font-family: var(--font-heading); font-size: clamp(3rem, 10vw, 4.5rem); font-weight: 800; line-height: 0.85; text-transform: uppercase; margin-bottom: 25px; }
+        .services-header h2 .white { color: var(--white); }
+        .services-header h2 .blue { color: var(--blue); }
+        .services-header p { font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.6; max-width: 650px; margin: 0 auto; }
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .service-card { background: #111; padding: 50px 30px; border-radius: 20px; text-align: left; transition: 0.4s; position: relative; border: 1px solid rgba(255,255,255,0.05); }
+        .service-card i { font-size: 3rem; color: rgba(255, 255, 255, 0.4); margin-bottom: 25px; transition: 0.4s; }
+        .service-card h3 { font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 15px; color: var(--white); transition: 0.4s; }
+        .service-card p { font-size: 0.95rem; color: rgba(255,255,255,0.5); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .service-card:hover { background: #181818; border-color: var(--blue); transform: translateY(-10px); }
+        .service-card:hover i, .service-card:hover h3 { color: var(--blue); }
+
+        /* -------------------------------------------
+           SEÇÃO CONTATO (PONTE)
+        ------------------------------------------- */
+        .contact-section { background-color: var(--bg); position: relative; z-index: 100; padding: 120px 8%; border-top: 1px solid rgba(255,255,255,0.05); }
+        .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+        
+        .contact-text h2 { font-family: var(--font-heading); font-size: clamp(3rem, 8vw, 5rem); font-weight: 800; line-height: 0.9; text-transform: uppercase; margin-bottom: 20px; }
+        .contact-text h2 .white { color: var(--white); }
+        .contact-text h2 .blue { color: var(--blue); }
+        .contact-text p { font-size: 1.1rem; color: rgba(255,255,255,0.6); margin-bottom: 40px; line-height: 1.6; }
+        
+        .btn-whatsapp { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 35px; background: #00C2FF; color: #000; font-weight: 800; text-transform: uppercase; border-radius: 50px; text-decoration: none; font-size: 14px; transition: 0.3s; }
+        .btn-whatsapp:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 194, 255, 0.4); }
+
+        .contact-form { display: flex; flex-direction: column; gap: 30px; background: #0a0a0a; padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .input-group { position: relative; }
+        .input-group input, .input-group textarea { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding: 15px 0; color: white; font-family: var(--font-body); font-size: 1rem; outline: none; transition: 0.3s; resize: none; }
+        .input-group input:focus, .input-group textarea:focus { border-bottom-color: var(--blue); }
+        .input-group label { position: absolute; top: 15px; left: 0; color: rgba(255,255,255,0.4); pointer-events: none; transition: 0.3s; font-size: 1rem; }
+        .input-group input:focus ~ label, .input-group input:valid ~ label,
+        .input-group textarea:focus ~ label, .input-group textarea:valid ~ label { top: -15px; font-size: 0.8rem; color: var(--blue); }
+        
+        .btn-submit { align-self: flex-start; background: transparent; border: 1px solid var(--blue); color: var(--blue); padding: 15px 45px; margin-top: 38px; border-radius: 50px; font-weight: 800; text-transform: uppercase; font-family: var(--font-body); cursor: pointer; transition: 0.3s; }
+        .btn-submit:hover { background: var(--white); color: #000; border: 1px solid var(--white);}
+
+        /* -------------------------------------------
+           FOOTER DISRUPTIVO
+        ------------------------------------------- */
+        footer { background: #050505; padding: 80px 8% 30px; position: relative; z-index: 100; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 40px; }
+        .footer-logo img { height: 40px; }
+        
+        .footer-links { display: flex; gap: 30px; }
+        .footer-links a { color: white; text-decoration: none; font-size: 14px; text-transform: uppercase; font-weight: 500; transition: 0.3s; }
+        .footer-links a:hover { color: var(--blue); }
+        
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.4); font-size: 13px; }
+        .footer-social { display: flex; gap: 20px; }
+        .footer-social a { color: rgba(255,255,255,0.4); font-size: 18px; transition: 0.3s; }
+        .footer-social a:hover { color: var(--blue); transform: translateY(-3px); }
+
+        .giant-text { font-family: var(--font-heading); font-size: 16vw; font-weight: 900; color: rgba(255,255,255,0.02); text-align: center; line-height: 0.8; margin-top: 50px; user-select: none; letter-spacing: -5px; white-space: nowrap;}
+
+        /* ===========================================
+           RESPONSIVIDADE E AJUSTES FINOS
+        =========================================== */
+
+        /* TABLETS E NOTEBOOKS MENORES */
         @media (max-width: 1100px) {
+            /* Desativa o cursor customizado para evitar bugs de toque */
+            * { cursor: auto !important; }
+            #custom-cursor { display: none !important; }
+            
             nav { padding: 0 25px; height: 80px; }
             .logo-desktop { display: none; }
-            .logo-desktop { display: block !important; width: 3.5rem !important; height: auto !important; }
+            .logo-mobile { display: block !important; width: 3.5rem !important; height: auto !important; }
             .nav-center, .nav-social-inner, .nav-right, .steve-jobs-quote { display: none !important; }
             .hamburger { display: block; }
             .hero { padding-left: 0; justify-content: center; text-align: center; }
-            
-            /* Correção Typewriter p/ Mobile: Fonte reduzida */
+            .hero-content { z-index: 50; }
             .hero-content div { font-size: 1.3rem !important; margin-top: 15px !important; white-space: nowrap; }
-            .hero-image-wrapper { opacity: 0.3; }
+            .hero-image-wrapper { opacity: 0.15; } /* Imagem suavizada para leitura de texto */
 
-            .projects-section { display: block; padding: 0; }
-            .projects-header { width: 100%; text-align: center; margin-bottom: 30px; position: relative; top: 0; padding: 100px 6% 20px;}
-            .projects-grid { width: 100%; grid-template-columns: 1fr; gap: 0; }
+            .projects-section, .about-section, .curriculo-section, .services-section, .contact-section { display: block; padding: 100px 5%; }
+            .projects-header, .about-image-side, .about-text-side { width: 100%; text-align: center; margin-bottom: 40px; position: relative; top: 0; }
+            .projects-grid, .about-content-layout { grid-template-columns: 1fr; width: 100%; }
+           
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+           
+            /* Cards de projeto para o efeito escadinha GSAP */
+            .project-card { height: 60vh; min-height: 400px; width: 100%; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px; box-shadow: 0 -15px 30px rgba(0,0,0,0.8); }
             
-            /* Estilo p/ efeito de Stacking Layers */
-            .project-card { 
-                height: 100vh; width: 100vw; border-radius: 0; 
-                border-top: 1px solid rgba(255,255,255,0.1); 
-            }
+            .about-content-layout { display: flex; flex-direction: column; gap: 40px;}
+            .about-img-box { height: 400px; }
+            .skills-section-wrapper { margin-top: 40px;}
+            .services-grid { grid-template-columns: 1fr; }
+            
+            .pdf-viewer-wrapper { height: 60vh; min-height: 400px; }
 
-            /* Social Media Mobile: Acompanha Hero, Branco */
-            .social-sidebar { 
-                display: flex; position: absolute; flex-direction: row; 
-                bottom: 30px; left: 50%; transform: translateX(-50%); gap: 35px;
+            .contact-layout { grid-template-columns: 1fr; gap: 50px; }
+            .contact-form { padding: 30px 20px; }
+            .footer-content { flex-direction: column; gap: 30px; text-align: center; }
+            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+            .giant-text { font-size: 22vw; letter-spacing: -2px; }
+        }
+
+        /* CELULARES (MOBILE FIRST UX) */
+        @media (max-width: 600px) {
+            .projects-section, .about-section, .curriculo-section, .services-section, .contact-section { padding: 80px 20px; }
+            
+            .hero-content h1 { font-size: 3rem !important; }
+            .contact-text h2 { font-size: 2.8rem; }
+            
+            .skills-grid { grid-template-columns: 1fr; }
+            .skill-tags-list { justify-content: center; }
+            
+            /* Melhorando a Área de Toque (Tap Targets) para polegares */
+            .btn-view-all, .btn-whatsapp, .btn-submit { 
+                width: 100%; 
+                justify-content: center; 
+                text-align: center; 
+                display: flex;
             }
-            .social-sidebar a { color: rgba(255,255,255,0.8); font-size: 18px; }
-            .scroll-down { bottom: 100px; } /* Ajustado p/ ficar acima da social sidebar */
+            .curriculo-buttons { flex-direction: column; gap: 15px; }
         }
     </style>
 </head>
@@ -199,28 +383,25 @@
     <nav id="main-nav">
         <div class="logo">
             <img src="Logo-RivaUX-Branco-Azul.png" class="logo-desktop" alt="Logo">
-            <!--img src="Logo-RivaUX-Branco-Azul.png" class="logo-mobile" alt="Logo"-->
+            <img src="Logo-RivaUX-Branco-Azul.png" class="logo-mobile" alt="Logo">
         </div>
-        
+       
         <div class="nav-center">
             <a href="#home" class="magnetic-link">Home</a>
-            <a href="#sobre" class="magnetic-link">Sobre</a>
-            <a href="#skills" class="magnetic-link">Skills</a>
             <a href="#projetos" class="magnetic-link">Projetos</a>
-            <a href="#servicos" class="magnetic-link">Serviços</a>
+            <a href="#sobre" class="magnetic-link">Sobre Mim</a>
             <a href="#curriculo" class="magnetic-link">Currículo</a>
-            <a href="#blog" class="magnetic-link">Blog</a>
+            <a href="#servicos" class="magnetic-link">Serviços</a>
             <div id="nav-underline"></div>
         </div>
 
         <div class="nav-social-inner">
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#"><i class="fab fa-behance"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/rivelinorodrigues" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.behance.net" target="_blank"><i class="fab fa-behance"></i></a>
+            <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
         </div>
 
         <div class="nav-right">
-            <a href="#" class="magnetic-link">Aulas</a>
             <a href="#contato" class="btn-contact">CONTATO<div class="btn-spotlight"></div></a>
         </div>
 
@@ -233,13 +414,10 @@
 
     <div class="mobile-overlay" id="mobile-overlay">
         <a href="#home" data-text="HOME">Home</a>
-        <a href="#sobre" data-text="SOBRE">Sobre</a>
-        <a href="#skills" data-text="SKILLS">Skills</a>
         <a href="#projetos" data-text="PROJETOS">Projetos</a>
-        <a href="#servicos" data-text="SERVICOS">Serviços</a>
-        <a href="#curriculo" data-text="CURRICULO">Currículo</a>
-        <a href="#blog" data-text="BLOG">Blog</a>
-        <a href="#" data-text="AULAS">Aulas</a>
+        <a href="#sobre" data-text="SOBRE MIM">Sobre Mim</a>
+        <a href="#curriculo" data-text="CURRÍCULO">Currículo</a>
+        <a href="#servicos" data-text="SERVIÇOS">Serviços</a>
         <a href="#contato" data-text="CONTATO">Contato</a>
     </div>
 
@@ -251,44 +429,210 @@
                 </h1>
                 <div style="margin-top:20px; font-size: 2rem; font-weight: 300;">EU SOU <span id="type-target" style="font-weight: 800; color: var(--blue);"></span><span style="color:var(--blue)">|</span></div>
             </div>
-            <div class="hero-image-wrapper"><img src="hero-section-img.png" alt="Hero Image"></div>
-            
+            <div class="hero-image-wrapper"><img src="hero-section-img.png" alt="Riva"></div>
             <a href="#projetos" class="scroll-down">SCROLL DOWN<i class="fas fa-chevron-down"></i></a>
-
-            <div class="social-sidebar">
-                <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://www.behance.net" target="_blank"><i class="fab fa-behance"></i></a>
-                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
-            </div>
         </section>
 
         <section class="projects-section" id="projetos">
             <div class="projects-header scroll-reveal">
                 <h2><span class="white">MEUS</span><br><span class="blue">PROJETOS</span></h2>
-                <p>O design disruptivo une a estética à utilidade. Explore abaixo meus casos de estudo que unificam performance, psicologia de produto e visual impactante.</p>
+                <p>Estratégia UX unificada à estética premium. Explore como transformo objetivos complexos em soluções digitais que convertem e encantam.</p>
                 <a href="#" class="btn-view-all">Ver todos os projetos</a>
             </div>
-
             <div class="projects-grid">
                 <div class="project-card stack-mobile">
-                    <img src="case-img.jpg" class="project-img">
-                    <div class="project-overlay"><h3>FINTECH UX</h3><p>Design moderno para transações bancárias complexas.</p><a href="#" class="btn-project-cta">Ver projeto</a></div>
+                    <img src="https://images.unsplash.com/photo-1551288049-bbbda5366991?q=80&w=1200" class="project-img">
+                    <div class="project-overlay"><h3>FINTECH UX</h3><p>Design moderno para transações bancárias complexas.</p><a href="#" class="btn-project-cta">Ver</a></div>
                 </div>
                 <div class="project-card stack-mobile">
                     <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1200" class="project-img">
-                    <div class="project-overlay"><h3>DASHBOARD AI</h3><p>Painel de controle com visualização de dados estratégicos.</p><a href="#" class="btn-project-cta">Ver projeto</a></div>
+                    <div class="project-overlay"><h3>DASHBOARD AI</h3><p>Painel de controle com dados estratégicos em tempo real.</p><a href="#" class="btn-project-cta">Ver</a></div>
                 </div>
-                <div class="project-card stack-mobile">
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200" class="project-img">
-                    <div class="project-overlay"><h3>E-COMMERCE LUX</h3><p>Experiência premium para lojas de alto luxo.</p><a href="#" class="btn-project-cta">Ver projeto</a></div>
+            </div>
+        </section>
+
+        <section class="about-section" id="sobre">
+            <div class="about-header scroll-reveal">  
+                <h2><span class="white">SOBRE </span><span class="blue"> MIM</span></h2>
+            </div>
+           
+            <div class="about-content-layout">
+                <div class="about-image-side scroll-reveal">
+                    <div class="about-img-box">
+                        <img src="hero-section-img.png" alt="Rivelino Rodrigues">
+                    </div>
                 </div>
-                <div class="project-card stack-mobile">
-                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1200" class="project-img">
-                    <div class="project-overlay"><h3>MOBILE CONNECT</h3><p>Foco na interatividade e formação de micro-comunidades.</p><a href="#" class="btn-project-cta">Ver projeto</a></div>
+
+                <div class="about-text-side scroll-reveal">
+                    <p>Meu nome é Rivelino Rodrigues, e atuo no mercado digital desenhando caminhos onde a tecnologia encontra a necessidade humana de forma silenciosa e eficiente. Acredito que o design de excelência é aquele que resolve um problema antes mesmo do usuário perceber que ele existia.</p>
+                    <p>Ao longo da minha jornada, refinei meu olhar para o "detalhe que importa", focando em métricas reais de conversão e fidelização, sempre protegendo a elegância visual que diferencia um produto comum de uma marca inesquecível.</p>
+                </div>
+            </div>
+
+            <div class="skills-section-wrapper" id="skills">
+                <div class="skills-category scroll-reveal">
+                    <h3>Ferramentas & Tecnologias</h3>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <i class="fa-brands fa-figma skill-icon"></i>
+                            <div class="skill-title">Figma</div>
+                            <div class="skill-desc">Prototipagem de alta fidelidade e estruturação de Design Systems escaláveis.</div>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fa-solid fa-layer-group skill-icon"></i>
+                            <div class="skill-title">Framer</div>
+                            <div class="skill-desc">Desenvolvimento no-code com foco em animações e landing pages premium.</div>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fa-brands fa-html5 skill-icon"></i>
+                            <div class="skill-title">HTML5 & CSS3</div>
+                            <div class="skill-desc">Estruturação semântica e estilização avançada para layouts responsivos.</div>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fa-brands fa-js skill-icon"></i>
+                            <div class="skill-title">JavaScript</div>
+                            <div class="skill-desc">Lógica de interface, manipulação de DOM e interações dinâmicas fluidas.</div>
+                        </div>
+                        <div class="skill-card">
+                            <img src="logo-gsap.png" alt="GSAP Logo" class="custom-skill-icon">
+                            <div class="skill-title">GSAP</div>
+                            <div class="skill-desc">Criação de animações complexas e imersivas baseadas em scroll e interações.</div>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fa-brands fa-bootstrap skill-icon"></i>
+                            <div class="skill-title">Bootstrap 5</div>
+                            <div class="skill-desc">Desenvolvimento ágil de frameworks mobile-first estruturados.</div>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-icon ps-icon">Ps</div>
+                            <div class="skill-title">Photoshop</div>
+                            <div class="skill-desc">Manipulação avançada de imagens e composição visual de alta performance.</div>
+                        </div>
+                        <div class="skill-card">
+                            <img src="image_a09478.png" alt="AI Logo" class="custom-skill-icon">
+                            <div class="skill-title">Inteligência Artificial</div>
+                            <div class="skill-desc">Integração de IA no fluxo de design para otimização de ativos e processos.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-category scroll-reveal">
+                    <h3>Visão Estratégica & Soft Skills</h3>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <i class="fa-solid fa-users-viewfinder skill-icon"></i>
+                            <div class="skill-title">Empatia & Visão Centrada</div>
+                            <div class="skill-desc">Capacidade de calçar os sapatos do usuário e traduzir dores reais em fluxos intuitivos e funcionais.</div>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fa-solid fa-comment-dots skill-icon"></i>
+                            <div class="skill-title">Comunicação & Storytelling</div>
+                            <div class="skill-desc">Facilidade para apresentar projetos, justificar decisões de design e alinhar expectativas técnicas.</div>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fa-solid fa-people-group skill-icon"></i>
+                            <div class="skill-title">Liderança & Facilitação</div>
+                            <div class="skill-desc">Vivência sólida na condução de dinâmicas, organização de tarefas e alinhamento de times.</div>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fa-solid fa-chess-knight skill-icon"></i>
+                            <div class="skill-title">Resolução de Problemas</div>
+                            <div class="skill-desc">Abordagem pragmática para contornar limitações de tecnologia e entregar o melhor ROI.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="curriculo-section" id="curriculo">
+            <div class="curriculo-header scroll-reveal">
+                <h2><span class="white">MEU</span><br><span class="blue">CURRÍCULO</span></h2>
+                <p>Explore minha trajetória profissional e acadêmica diretamente abaixo, ou faça o download da versão que melhor se adapta à sua necessidade.</p>
+            </div>
+            
+            <div class="pdf-viewer-wrapper scroll-reveal">
+                <iframe src="Currículo-UX-Design.pdf" width="100%" height="100%" style="border: none;">
+                    <p style="color: white; padding: 20px;">Seu navegador não suporta a visualização direta de PDFs. <a href="Currículo-UX-Design.pdf" style="color: var(--blue);">Clique aqui para baixar o currículo.</a></p>
+                </iframe>
+            </div>
+
+            <div class="curriculo-buttons scroll-reveal">
+                <a href="Currículo-UX-Design.pdf" download="Rivelino-Curriculo-Criativo.pdf" class="btn-view-all">Baixar Currículo Criativo <i class="fas fa-file-pdf" style="margin-left: 8px;"></i></a>
+                <a href="curriculo-texto.pdf" download="Rivelino-Curriculo-Texto.pdf" class="btn-view-all btn-secondary">Baixar Currículo Texto <i class="fas fa-file-lines" style="margin-left: 8px;"></i></a>
+            </div>
+        </section>
+
+        <section class="services-section" id="servicos">
+            <div class="services-header scroll-reveal">
+                <h2><span class="white">MEUS</span><br><span class="blue">SERVIÇOS</span></h2>
+                <p>Estratégia e execução para produtos digitais de alta escala.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card scroll-reveal"><i class="fa-solid fa-wand-magic-sparkles"></i><h3>Consultoria UX/UI</h3><p>Análise estratégica de interfaces focadas em ROI e retenção de usuários.</p></div>
+                <div class="service-card scroll-reveal"><i class="fa-solid fa-layer-group"></i><h3>Prototipagem</h3><p>Validação ágil de ideias através de fluxos funcionais no Figma ou Framer.</p></div>
+                <div class="service-card scroll-reveal"><i class="fa-solid fa-laptop-code"></i><h3>Web Design</h3><p>Desenvolvimento visual disruptivo focado em branding e responsividade total.</p></div>
+            </div>
+        </section>
+
+        <section class="contact-section" id="contato">
+            <div class="contact-layout">
+                <div class="contact-text scroll-reveal">
+                    <h2><span class="white">VAMOS</span><br><span class="blue">CONVERSAR?</span></h2>
+                    <p>Seja para um novo projeto, uma consultoria de UX ou apenas para trocar ideias sobre design e tecnologia, estou à disposição. Escolha o canal que preferir e vamos construir algo incrível juntos.</p>
+                    
+                    <a href="https://wa.me/5511939271712" target="_blank" class="btn-whatsapp">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i> Iniciar no WhatsApp
+                    </a>
+                </div>
+
+                <div class="contact-form scroll-reveal">
+                    <form onsubmit="event.preventDefault(); alert('Mensagem enviada! Retornarei em breve.');">
+                        <div class="input-group">
+                            <input type="text" id="name" required>
+                            <label for="name">Seu Nome</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="email" required>
+                            <label for="email">Seu E-mail</label>
+                        </div>
+                        <div class="input-group">
+                            <textarea id="message" rows="4" required></textarea>
+                            <label for="message">Como posso te ajudar?</label>
+                        </div>
+                        <button type="submit" class="btn-submit">Enviar Mensagem</button>
+                    </form>
                 </div>
             </div>
         </section>
     </main>
+
+    <footer>
+        <div class="footer-content scroll-reveal">
+            <div class="footer-logo">
+                <img src="Logo-RivaUX-Branco-Azul.png" alt="RivaUX">
+            </div>
+            
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#projetos">Projetos</a>
+                <a href="#sobre">Sobre Mim</a>
+                <a href="#servicos">Serviços</a>
+            </div>
+
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/rivelinorodrigues" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.behance.net" target="_blank"><i class="fab fa-behance"></i></a>
+                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-bottom scroll-reveal">
+            <p>&copy; 2026 Rivelino Rodrigues. Todos os direitos reservados.</p>
+            <p>Design & Code por Rivelino Rodrigues</p>
+        </div>
+
+        <div class="giant-text scroll-reveal">RIVA UX</div>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -298,113 +642,87 @@
     <script>
         gsap.registerPlugin(TextPlugin, ScrollTrigger);
 
-        // --- 1. SMOOTH SCROLL (LENIS) ---
-        // ⏱️ Para alterar a suavidade geral da página, mexa no 'duration' abaixo:
-        const lenis = new Lenis({ duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        const lenis = new Lenis({ duration: 1.5 });
         lenis.on('scroll', ScrollTrigger.update);
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // --- 2. PRELOADER & START ---
-        // ⏱️ Altere 'duration' (1.5) p/ mudar quão rápido a barra do preloader sobe
         gsap.to(".loader-bar-fill", { width: "100%", duration: 1.5, onComplete: () => {
             gsap.to("#preloader", { y: "-100%", duration: 1, ease: "power4.inOut" });
             initPlexus(); initScrollAnimations();
         }});
 
-        // --- 3. CURSOR & MENU ---
+        const ham = document.getElementById('hamburger'), overlay = document.getElementById('mobile-overlay'), logoCont = document.querySelector('.logo');
+        ham.addEventListener('click', () => {
+            const isOpen = !ham.classList.contains('ham-active'); ham.classList.toggle('ham-active');
+            gsap.to(overlay, { top: isOpen ? 0 : "-100%", duration: 0.8, ease: "power3.inOut" });
+            logoCont.classList.toggle('hide-logo', isOpen);
+        });
+
+        // Fechar menu mobile ao clicar em um link
+        document.querySelectorAll('.mobile-overlay a').forEach(link => {
+            link.addEventListener('click', () => {
+                ham.classList.remove('ham-active');
+                gsap.to(overlay, { top: "-100%", duration: 0.8, ease: "power3.inOut" });
+                logoCont.classList.remove('hide-logo');
+            });
+        });
+
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', e => gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 }));
 
-        const ham = document.getElementById('hamburger');
-        const overlay = document.getElementById('mobile-overlay');
-        const logoCont = document.querySelector('.logo');
-        const mainNav = document.getElementById('main-nav');
-
-        ham.addEventListener('click', () => {
-            const isOpening = !ham.classList.contains('ham-active');
-            ham.classList.toggle('ham-active');
-            // Animação descendo do topo
-            gsap.to(overlay, { top: isOpening ? 0 : "-100%", duration: 0.8, ease: "power3.inOut" });
-            mainNav.classList.toggle('nav-active-mobile', isOpening);
-            logoCont.classList.toggle('hide-logo', isOpening);
-        });
-
-        // Spotlight
-        const btnContact = document.querySelector('.btn-contact');
-        btnContact.addEventListener('mousemove', e => {
-            const rect = btnContact.getBoundingClientRect();
-            gsap.to('.btn-spotlight', { left: e.clientX - rect.left, top: e.clientY - rect.top, duration: 0.3 });
-        });
-
-        // Typewriter
         const words = ["UX UI DESIGNER", "WEB DESIGNER", "FREELANCER"];
         let masterTl = gsap.timeline({repeat: -1});
-        words.forEach(word => {
-            masterTl.add(gsap.timeline({repeatDelay: 2}).to("#type-target", { text: word, duration: 1.2 }).to("#type-target", { text: "", duration: 0.8, delay: 1.5 }));
-        });
+        words.forEach(word => masterTl.add(gsap.timeline({repeatDelay: 2}).to("#type-target", {text: word, duration: 1}).to("#type-target", {text: "", duration: 0.8, delay: 1.5})));
 
-        // --- 4. SCROLL ANIMATIONS (STACKING LAYERS MOBILE) ---
         function initScrollAnimations() {
-            // Cards fade-in padrão p/ Desktop
             gsap.utils.toArray('.scroll-reveal').forEach((item) => {
-                // ⏱️ Altere 'duration' (1.2) p/ mudar a velocidade de surgimento das seções ao scrollar
-                gsap.fromTo(item, { opacity: 0, y: 50 }, { 
+                gsap.fromTo(item, { opacity: 0, y: 50 }, {
                     opacity: 1, y: 0, duration: 1.2, ease: "power3.out",
                     scrollTrigger: { trigger: item, start: "top 90%", end: "bottom 10%", toggleActions: "play reverse play reverse" }
                 });
             });
 
-            // STACKING EFFECT (Apenas no Mobile < 1100px)
+            // Efeito refinado de sobreposição de cards no Mobile
             ScrollTrigger.matchMedia({
                 "(max-width: 1100px)": function() {
                     gsap.utils.toArray(".stack-mobile").forEach((panel, i) => {
-                        ScrollTrigger.create({
-                            trigger: panel,
-                            start: "top top",
-                            pin: true,
-                            pinSpacing: false, // Efeito solicitado: encavalar/stacking
-                            scrub: true
+                        ScrollTrigger.create({ 
+                            trigger: panel, 
+                            start: "top " + (100 + (i * 15)) + "px", // Cria o efeito escadinha do baralho
+                            pin: true, 
+                            pinSpacing: false 
                         });
                     });
                 }
             });
         }
 
-        // --- 5. PLEXUS MANTIDO ---
         function initPlexus() {
-            const canvas = document.getElementById('plexus-canvas');
-            const ctx = canvas.getContext('2d');
-            let p = [], m = { x: -1000, y: -1000, r: 220 };
+            const canvas = document.getElementById('plexus-canvas'); const ctx = canvas.getContext('2d');
+            let p = [];
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            for(let i=0; i< (canvas.width * canvas.height / 35000); i++) {
-                p.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*1.6, vy: (Math.random()-0.5)*1.6, s: 2.8 });
-            }
+            for(let i=0; i< (canvas.width * canvas.height / 35000); i++) p.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*1.6, vy: (Math.random()-0.5)*1.6, s: 2.8 });
             function anim() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 p.forEach(pt => {
                     pt.x += pt.vx; pt.y += pt.vy;
-                    if(pt.x<0 || pt.x>canvas.width) pt.vx *= -1;
-                    if(pt.y<0 || pt.y>canvas.height) pt.vy *= -1;
-                    let dx = pt.x - m.x, dy = pt.y - m.y, d = Math.sqrt(dx*dx + dy*dy);
-                    if(d < m.r) { pt.x += (dx/d)*10; pt.y += (dy/d)*10; }
-                    ctx.fillStyle = "rgba(255,255,255,0.4)";
-                    ctx.beginPath(); ctx.arc(pt.x, pt.y, pt.s, 0, Math.PI * 2); ctx.fill();
+                    if(pt.x<0 || pt.x>canvas.width) pt.vx *= -1; if(pt.y<0 || pt.y>canvas.height) pt.vy *= -1;
+                    ctx.fillStyle = "rgba(255,255,255,0.4)"; ctx.beginPath(); ctx.arc(pt.x, pt.y, pt.s, 0, Math.PI * 2); ctx.fill();
                     p.forEach(pt2 => {
                         let d2 = Math.sqrt((pt.x-pt2.x)**2 + (pt.y-pt2.y)**2);
-                        if(d2 < 180){
-                            ctx.strokeStyle = `rgba(0,194,255,${(1-d2/180)*0.35})`;
-                            ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(pt.x, pt.y); ctx.lineTo(pt2.x, pt2.y); ctx.stroke();
-                        }
+                        if(d2 < 170){ ctx.strokeStyle=`rgba(0,194,255,${(1-d2/180)*0.35})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(pt.x, pt.y); ctx.lineTo(pt2.x, pt2.y); ctx.stroke(); }
                     });
                 });
                 requestAnimationFrame(anim);
             }
-            window.addEventListener('mousemove', e => { m.x=e.clientX; m.y=e.clientY; });
             anim();
         }
-        
-        // Underline Magnético Navbar
+
+        document.querySelector('.btn-contact').addEventListener('mousemove', e => {
+            const rect = e.target.getBoundingClientRect(); gsap.to('.btn-spotlight', { left: e.clientX - rect.left, top: e.clientY - rect.top, duration: 0.3 });
+        });
+
         const underline = document.getElementById('nav-underline');
         document.querySelectorAll('.nav-center .magnetic-link').forEach(link => {
             link.addEventListener('mouseenter', () => {
